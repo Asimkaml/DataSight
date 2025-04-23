@@ -7,15 +7,15 @@ import io
 import base64
 from datetime import datetime
 import re
-from dotenv import load_dotenv 
+# from dotenv import load_dotenv 
 from sklearn.ensemble import IsolationForest
 import matplotlib.pyplot as plt
 import seaborn as sns
 from io import BytesIO
 import google.generativeai as genai
-import os
+# import os
 import statsmodels 
-load_dotenv()
+# load_dotenv()
 
 class Backend:
     #constructor
@@ -32,7 +32,8 @@ class Backend:
         self.correlation_matrix = None
          # Initialize Gemini
         # self.gemini_api_key = os.getenv("API_KEY")
-        gemini_api_key = os.getenv("API_KEY")
+        # gemini_api_key = os.getenv("API_KEY")
+        gemini_api_key = st.secrets["API_KEY"]
         if gemini_api_key:
             try:
                 genai.configure(api_key=gemini_api_key)
