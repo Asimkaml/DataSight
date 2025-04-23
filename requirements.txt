@@ -10,3 +10,4 @@ torch
 pillow
 speechrecognition
 google-generativeai
+import statsmodels
