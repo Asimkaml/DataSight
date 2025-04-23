@@ -1,6 +1,5 @@
 from backened import *
 
-
 # Page configuration
 st.set_page_config(
     page_title="Data Analysis Assistant",
@@ -599,32 +598,16 @@ if st.session_state.df is not None:
                     else:
                         st.info("I couldn't understand the specific analysis you're looking for. Try asking about correlation, top values, or trends over time.")
 
-    # Chat Assistant Tab
     with tabs[3]:
         st.header("Chat with Your Data")
         
-        # Add Gemini API key input in the sidebar
-        # with st.sidebar:
-        #     if st.session_state.df is not None:
-        #         st.divider()
-        #         st.header("AI Settings")
-        #         gemini_api_key = st.text_input("Enter Gemini API Key (optional)", type="password", key="gemini_key")
-        #         if gemini_api_key:
-        #             st.session_state.backend.gemini_api_key = gemini_api_key
-        #             try:
-        #                 genai.configure(api_key=gemini_api_key)
-        #                 st.session_state.backend.gemini_model = genai.GenerativeModel('gemini-pro')
-        #                 st.session_state.backend.gemini_available = True
-        #                 st.success("Gemini API connected successfully!")
-        #             except Exception as e:
-        #                 st.error(f"Failed to connect to Gemini: {str(e)}")
-        #                 st.session_state.backend.gemini_available = False
+        # Initialize rerun flag if not exists
+        if 'pending_rerun' not in st.session_state:
+            st.session_state.pending_rerun = False
         
         # Display chat history
         for i, (query, response) in enumerate(st.session_state.chat_history):
             col1, col2 = st.columns([1, 9])
-            # with col1:
-            #     st.image("https://cdn.pixabay.com/photo/2016/04/01/10/04/amusing-1299756_960_720.png", width=50)
             with col2:
                 st.write(f"**You:** {query}")
             
@@ -639,7 +622,7 @@ if st.session_state.df is not None:
         # Chat input
         user_query = st.text_input("Ask a question about your data:", key="chat_input")
         
-        if user_query and user_query.strip():
+        if user_query and user_query.strip() and not st.session_state.pending_rerun:
             with st.spinner("Analyzing your question..."):
                 # First try to handle with built-in analysis
                 response = None
@@ -725,13 +708,14 @@ if st.session_state.df is not None:
                         'chart': None
                     }
                 
-                # Add the query and response to chat history
                 st.session_state.chat_history.append((user_query, response))
-                
-                # Force a rerun to show the updated chat history
-                st.rerun()
-                st.stop()
+            
+            # Set flag and trigger rerun
+            st.session_state.pending_rerun = True
+            st.rerun()
 
+    # Reset the flag after rerun completes
+    st.session_state.pending_rerun = False
         # Report Tab
     with tabs[4]:
         st.header("Analysis Report")
