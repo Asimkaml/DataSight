@@ -11,3 +11,4 @@ pillow
 speechrecognition
 google-generativeai
 statsmodels
+import openpyxl
