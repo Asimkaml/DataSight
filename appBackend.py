@@ -16,7 +16,7 @@ import google.generativeai as genai
 #import os
 import openpyxl
 import statsmodels 
-load_dotenv()
+#load_dotenv()
 
 class Backend:
     #constructor
