@@ -7,13 +7,13 @@ import io
 import base64
 from datetime import datetime
 import re
-from dotenv import load_dotenv 
+#from dotenv import load_dotenv 
 from sklearn.ensemble import IsolationForest
 import matplotlib.pyplot as plt
 import seaborn as sns
 from io import BytesIO
 import google.generativeai as genai
-import os
+#import os
 import openpyxl
 import statsmodels 
 load_dotenv()
