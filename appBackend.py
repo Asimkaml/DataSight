@@ -34,9 +34,7 @@ class Backend:
         self.charts = []
         self.correlation_matrix = None
          # Initialize Gemini
-        # self.gemini_api_key = os.getenv("API_KEY")
-        gemini_api_key = os.getenv("API_KEY")
-        # gemini_api_key = st.secrets["API_KEY"]
+        gemini_api_key = st.secrets["API_KEY"]
         if gemini_api_key:
             try:
                 genai.configure(api_key=gemini_api_key)
